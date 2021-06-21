@@ -142,7 +142,7 @@
 
   const updateDiaryOnDB = async () => {
     if (isInDB.value) {
-      const request = await fetch (`http://localhost:5500/journals/update/${ currentDiary.value.id }`, {
+      const request = await fetch (`https://rest-api-aplikasi-jurnal.herokuapp.com/journals/update/${ currentDiary.value.id }`, {
         mode: 'cors',
         method: 'PUT',
         headers: {
@@ -159,7 +159,7 @@
 
     }
     else if (!isInDB.value) {
-      const request = await fetch (`http://localhost:5500/journals/create`, {
+      const request = await fetch (`https://rest-api-aplikasi-jurnal.herokuapp.com/journals/create`, {
         mode: 'cors',
         method: 'POST',
         headers: {
@@ -233,11 +233,10 @@
   });
 
   onMounted( async () => {
-    const response = await fetch ('http://localhost:5500/journals/', {
+    const response = await fetch ('https://rest-api-aplikasi-jurnal.herokuapp.com/journals/', {
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json',
-          'Origin': 'http://localhost:3000'
+          'Content-Type': 'application/json'
         }
     })
     const data = await response.json();
