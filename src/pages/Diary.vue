@@ -348,6 +348,7 @@
 
     &__calendar {
       grid-area: calendar;
+      width: 100% !important;
     }
 
     &__details {
