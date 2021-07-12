@@ -1,0 +1,9 @@
+@use '../abstracts';
+
+.link {
+  color: abstracts.$primary;
+
+  &:hover {
+    text-shadow: 0px 0px 5px abstracts.$primary;
+  }
+}

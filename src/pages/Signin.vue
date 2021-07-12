@@ -1,13 +1,33 @@
 <template>
-  <input 
-    type="text"
-    v-model="signinData.userUniqueName"
-  >
-  <input 
-    type="password"
-    v-model="signinData.password"
-  >
-  <button @click="handleSignin">Sign in</button>
+  <div class="signin">
+    <label class="label">Username</label>
+    <input 
+      class="input" 
+      type="text"
+      v-model="signinData.userUniqueName"
+    >
+    <label class="label">Password</label>
+    <input 
+      class="input" 
+      type="password"
+      v-model="signinData.password"
+    >
+    <button 
+      class="button button--primary" 
+      @click="handleSignin"
+    >
+      Sign in
+    </button>
+    <div class="to-signup">
+      <p class="label">Don't have an account ?</p>
+      <a 
+        class="link" 
+        href=""
+      >
+        Sign up
+      </a>
+    </div>
+  </div>
 </template>
 
 <script setup>
