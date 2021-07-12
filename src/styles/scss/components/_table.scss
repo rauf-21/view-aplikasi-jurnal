@@ -1,0 +1,39 @@
+@use '../abstracts';
+
+.table {
+  width: 100%;
+  color: abstracts.$text-color;
+  text-align: center;
+  border-spacing: 0;
+
+  &__head-container {
+    background-color: abstracts.$bright-dark;
+      
+  } 
+
+  &__head {
+    padding: 0.5rem 1rem;
+    border: 1px solid abstracts.$bright-separator;
+    background-color: abstracts.$bright-separator;
+  }
+
+  &__row-container {
+
+
+  }
+
+  &__row {
+
+
+  }
+
+  &__data {
+    outline: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid abstracts.$bright-separator; 
+
+    &:focus {
+      background-color: abstracts.$dark;
+    }
+  }
+}

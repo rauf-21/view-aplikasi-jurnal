@@ -1,0 +1,17 @@
+@use '../abstracts';
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: abstracts.$text-color;
+
+  .title {
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .description {
+    
+  }
+}

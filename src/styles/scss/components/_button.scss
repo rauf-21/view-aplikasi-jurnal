@@ -1,0 +1,33 @@
+@use '../abstracts';
+
+.button {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background-color: abstracts.$bright-dark;
+  color: abstracts.$text-color;
+  border: 1px solid abstracts.$bright-separator;
+  cursor: pointer;
+
+  &--primary {
+    color: abstracts.$primary;
+    border: 1px solid abstracts.$primary;
+
+    &:hover {
+      color: abstracts.$text-color;
+      background-color: darken(abstracts.$primary, 15%);
+      border: 1px solid darken(abstracts.$primary, 15%);
+    }
+  }
+
+  &--danger {
+    color: abstracts.$danger;
+    border: 1px solid abstracts.$danger;
+
+    &:hover {
+      color: abstracts.$text-color;
+      background-color: darken(abstracts.$danger, 5%);
+      border: 1px solid darken(abstracts.$danger, 5%);
+    }
+  }
+}

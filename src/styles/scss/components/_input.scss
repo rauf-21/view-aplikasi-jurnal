@@ -1,0 +1,33 @@
+@use '../abstracts';
+
+::-ms-reveal {
+  filter: invert(100%)
+}
+
+.input {
+  color: abstracts.$text-color;
+  border: 1px solid abstracts.$bright-separator;
+  background-color: abstracts.$dark;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  font-family: 'Segoe UI';
+  vertical-align: middle;
+
+  &:focus {
+    box-shadow: 0 0 5px abstracts.$bright-blue;
+  }
+
+  &[type="text"],
+  &[type="password"] {
+    line-height: 0;
+  }
+
+  &[type='time'] {
+    padding: 0.2rem 0.5rem;
+
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(98%) sepia(89%) saturate(31%) hue-rotate(13deg) brightness(107%) contrast(100%);
+    }
+  }
+}

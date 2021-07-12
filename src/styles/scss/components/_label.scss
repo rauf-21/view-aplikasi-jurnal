@@ -1,0 +1,6 @@
+@use '../abstracts';
+
+.label {
+  color: abstracts.$text-color;
+  font-weight: bold;
+}

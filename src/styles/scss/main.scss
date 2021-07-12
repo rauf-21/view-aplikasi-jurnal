@@ -1,0 +1,11 @@
+@use 'base';
+@use 'abstracts';
+@use 'components';
+@use 'layouts';
+
+body {
+  font-family: 'Segoe UI';
+  background-color: abstracts.$bright-dark;
+  overflow-x: hidden;
+}
+
