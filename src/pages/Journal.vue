@@ -36,6 +36,7 @@ import JournalAction from '@/components/JournalAction.vue';
 import { ref, watch } from 'vue';
 import { useToast } from 'vue-toastification'; 
 import useDiary from '@/composables/useDiary';
+import toastConfig from '@/config/toast';
 
 export default {
   components: { 
@@ -46,6 +47,8 @@ export default {
   },
 
   async setup () {
+
+    const toast = useToast();
 
     const selectedDay = ref(new Date());    
 
@@ -63,11 +66,31 @@ export default {
     function changeDate (date) { selectedDay.value = date; }
 
     async function addNewActivity (newActivity) {
-      await addDiaryActivity(selectedDay.value, newActivity);
+      const response = await addDiaryActivity(selectedDay.value, newActivity);
+
+      if (!response.success) {
+        toast.clear();
+        toast.error(response.message, toastConfig.error);
+        
+        return;
+      }
+
+      toast.clear();
+      toast.success(response.message, toastConfig.success);
     }
 
     async function updateActivity (newActivity) {
-      await updateDiaryActivity(selectedDay.value, newActivity);
+      const response = await updateDiaryActivity(selectedDay.value, newActivity);
+
+      if (!response.success) {
+        toast.clear();
+        toast.error(response.message, toastConfig.error);
+        
+        return;
+      }
+
+      toast.clear();
+      toast.success(response.message, toastConfig.short);
     }
 
     return {

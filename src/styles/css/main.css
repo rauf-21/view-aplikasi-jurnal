@@ -454,6 +454,10 @@ template {
 .input[type=time]::-webkit-calendar-picker-indicator {
   filter: invert(98%) sepia(89%) saturate(31%) hue-rotate(13deg) brightness(107%) contrast(100%);
 }
+.input--readonly {
+  text-align: center;
+  background-color: #1A202C;
+}
 
 .label {
   color: white;
@@ -502,11 +506,11 @@ template {
   min-height: 100vh;
   overflow-x: hidden;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 35% 65%;
   grid-template-areas: "actions details" "actions details";
   grid-gap: 1rem;
   box-sizing: border-box;
-  padding: 0.2rem 0.8rem;
+  padding: 0.2rem 0.4rem;
 }
 .journal > * {
   margin: 1rem;
@@ -608,7 +612,6 @@ body {
   font-family: "Segoe UI";
   background-color: #1A202C;
   overflow-x: hidden;
-  color: white;
 }
 
 /*# sourceMappingURL=main.css.map */

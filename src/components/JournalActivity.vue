@@ -15,23 +15,34 @@
         v-for="(activity, index) in activities"
       >
         <td class="table__data">{{ index + 1 }}</td>
-        <td 
-          class="table__data"
-          @dblclick="changeTimeSchedule(index)"
-          @blur="updateActivity"
-          :ref="el => { if (el) element.time[index] = el }"
-          :contenteditable="contenteditable" 
-        >
-          {{ activity.start }}-{{ activity.end }}
+        <td class="table__data">
+          <input 
+            :class="`input ${ readonly ? 'input--readonly' : '' }`" 
+            @dblclick="toggleReadonly"
+            @blur="updateActivity"
+            type="time"
+            v-model="activity.start"
+            :readonly="readonly" 
+          >
+          -
+          <input 
+            :class="`input ${ readonly ? 'input--readonly' : '' }`" 
+            @dblclick="toggleReadonly"
+            @blur="updateActivity"
+            type="time" 
+            v-model="activity.end"
+            :readonly="readonly" 
+          >
         </td>
-        <td 
-          class="table__data"
-          @dblclick="changeActivity(index)"
-          @blur="updateActivity"
-          :ref="el => { if (el) element.task[index] = el }"
-          :contenteditable="contenteditable" 
-        >
-          {{ activity.task }}
+        <td class="table__data">
+          <input
+            :class="`input ${ readonly ? 'input--readonly' : '' }`" 
+            @dblclick="toggleReadonly"
+            @blur="updateActivity"
+            type="text" 
+            v-model="activity.task"
+            :readonly="readonly"
+          >
         </td>
       </tr>
     </tbody>
@@ -45,7 +56,7 @@
 </template>
 
 <script>
-import { ref, reactive, toRefs, watchEffect, onBeforeUpdate } from 'vue';
+import { ref, toRefs, watchEffect, onBeforeUpdate } from 'vue';
 
 export default {
   props: {
@@ -58,36 +69,30 @@ export default {
 
     const { activities } = toRefs(props);
 
-    const contenteditable = ref(false);
+    const readonly = ref(true);
 
     const element = ref({
-      time: [],
+      start: [],
+      end: [],
       task: []
     });
-
-    const changeTimeSchedule = (index) => {
-      contenteditable.value = true;
-    }
-
-    const changeActivity = (index) => {
-      contenteditable.value = true;
-    }
 
     onBeforeUpdate(() => {
       element.value.time = [];
       element.value.task = [];
     });
+    
+    function toggleReadonly () { readonly.value = !readonly.value };
 
-    function updateActivity () {
-      emit('activityUpdate', activities.value);
+    function updateActivity (e) {
+      if (!readonly.value) emit('activityUpdate', activities.value);
     }
 
     return {
       activities,
-      changeTimeSchedule,
-      changeActivity,
       element,
-      contenteditable,
+      readonly,
+      toggleReadonly,
       updateActivity
     }
   }

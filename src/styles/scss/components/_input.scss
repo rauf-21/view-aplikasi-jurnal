@@ -22,12 +22,17 @@
   &[type="password"] {
     line-height: 0;
   }
-
+  
   &[type='time'] {
     padding: 0.2rem 0.5rem;
-
+    
     &::-webkit-calendar-picker-indicator {
       filter: invert(98%) sepia(89%) saturate(31%) hue-rotate(13deg) brightness(107%) contrast(100%);
     }
+  }
+
+  &--readonly {
+    text-align: center;
+    background-color: abstracts.$bright-dark;
   }
 }

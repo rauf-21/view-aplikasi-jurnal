@@ -57,12 +57,6 @@ export default {
           end: end.value, 
           task: task.value 
         });
-
-        toast.clear();
-
-        toast.success('Saved successfully', {
-          timeout: 5000
-        });
        
         start.value = '';
         end.value = '';
@@ -70,12 +64,6 @@ export default {
 
         return;
       }
-
-      toast.clear();
-
-      toast.error('All column (start time, end time and task) must be filled', {
-        timeout: 10000
-      })
     }
 
     return {
