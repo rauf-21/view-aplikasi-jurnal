@@ -30,7 +30,7 @@ const useDiary = (targetDate) => {
       }
 
       try {
-        diary.value = await diaryCollection.setItem(key, emptyDiary);
+        diary.value = await diaryCollection.setItem(key, emptyDiary);     
       }
       catch (err) {
         console.error(`Failed to put new diary on local database : ${ err }`);
@@ -43,20 +43,50 @@ const useDiary = (targetDate) => {
   }
 
   async function addDiaryActivity (targetDate, newActivity) {
-    const key = formattedDate(targetDate);
-
-    diary.value.activities = [...diary.value.activities, newActivity];
 
     try {
+      const key = formattedDate(targetDate);
+      
+      diary.value.activities = [...diary.value.activities, newActivity];
+
       await diaryCollection.setItem(key, copyObject(diary.value));
+    
+      return { 
+        success: true ,
+        message: 'Activity added successfully' 
+      };
     }
     catch (err) {
-      console.error(`Failed to update diary activity :\n${ err }`);
+    
+      return { 
+        success: false, 
+        message: 'Failed to add diary activity' 
+      }
     }
   } 
 
-  async function updateDiaryActivity (targetDate, newActivity) {
-    console.log(copyObject(newActivity));
+  async function updateDiaryActivity (targetDate, newActivities) {
+    
+    try {
+      const key = formattedDate(targetDate);
+
+      diary.value.activities = [...newActivities];
+
+      await diaryCollection.setItem(key, copyObject(diary.value));
+
+      return {
+        success: true,
+        message: 'Diary activity updated successfully'
+      }
+    }
+    catch (err) {
+      console.error('Failed to update diary activity :\n${ err }');
+
+      return {
+        success: false,
+        message: 'Failed to update diary activity'
+      }
+    }
   }
 
   return {
