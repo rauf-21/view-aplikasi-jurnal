@@ -7,8 +7,10 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.4.0",
+    "@sweetalert2/theme-dark": "^5.0.1",
     "json-server": "^0.16.3",
     "localforage": "^1.9.0",
+    "sweetalert2": "^11.0.18",
     "v-calendar": "^3.0.0-alpha.4",
     "vue": "^3.0.5",
     "vue-router": "4",

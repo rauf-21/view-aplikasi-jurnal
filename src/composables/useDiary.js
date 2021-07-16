@@ -3,11 +3,8 @@ import { formattedDate, copyObject } from '@/helper';
 import { diaryCollection } from '@/db';
 
 const useDiary = (targetDate) => {
-
   const date = ref(targetDate);
-
   const diary = ref(null);
-
   const diaries = ref([]);
 
   onMounted ( async () => {
@@ -16,7 +13,6 @@ const useDiary = (targetDate) => {
 
   async function navigateDiary (targetDate) {
     const key = formattedDate(targetDate);
-
     const data = await diaryCollection.getItem(key);
 
     if (data === null) {
@@ -43,7 +39,6 @@ const useDiary = (targetDate) => {
   }
 
   async function addDiaryActivity (targetDate, newActivity) {
-
     try {
       const key = formattedDate(targetDate);
       
@@ -66,7 +61,6 @@ const useDiary = (targetDate) => {
   } 
 
   async function updateDiaryActivity (targetDate, newActivities) {
-    
     try {
       const key = formattedDate(targetDate);
 
