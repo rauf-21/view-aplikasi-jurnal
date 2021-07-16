@@ -87,7 +87,7 @@ export default {
     }
   },
   setup (props, { emit }) {
-    const { showConfirmation, warningAlert } = useAlert();
+    const { warningAlert } = useAlert();
     const { activities } = toRefs(props);
     const editMode = ref(false);
 
@@ -100,7 +100,7 @@ export default {
     async function deleteActivity (activity, targetIndex) {
       const newActivities = activities.value.filter((_, index) => index !== targetIndex);
       const confirmation = await warningAlert({
-        title: 'Delete this',
+        title: 'Delete this ?',
         text: `Time: ${ activity.start } - ${ activity.end } \n Task: ${ activity.task }`,
         input: 'checkbox',
         inputValue: 0,
