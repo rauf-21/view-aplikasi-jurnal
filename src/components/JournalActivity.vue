@@ -8,8 +8,14 @@
       <th class="table__head">No</th>
       <th class="table__head">Time schedule</th>
       <th class="table__head">Activity</th>
+      <th 
+        class="table__head"
+        v-show="editMode"
+      >
+        Action
+      </th>
     </thead>
-    <tbody class="table__row-container" draggable="true">
+    <tbody class="table__row-container">
       <tr
         class="table__row" 
         v-for="(activity, index) in activities"
@@ -17,32 +23,46 @@
         <td class="table__data">{{ index + 1 }}</td>
         <td class="table__data">
           <input 
-            :class="`input ${ readonly ? 'input--readonly' : '' }`" 
-            @dblclick="toggleReadonly"
-            @blur="updateActivity"
+            :class="`input ${ !editMode ? 'input--readonly' : '' }`" 
+            @dblclick="enableEditMode"
+            @keyup.esc="disableEditMode"
+            @blur="updateActivity(activities)"
             type="time"
             v-model="activity.start"
-            :readonly="readonly" 
+            :readonly="!editMode" 
           >
           -
           <input 
-            :class="`input ${ readonly ? 'input--readonly' : '' }`" 
-            @dblclick="toggleReadonly"
-            @blur="updateActivity"
+            :class="`input ${ !editMode ? 'input--readonly' : '' }`" 
+            @dblclick="enableEditMode"
+            @keyup.esc="disableEditMode"
+            @blur="updateActivity(activities)"
             type="time" 
             v-model="activity.end"
-            :readonly="readonly" 
+            :readonly="!editMode" 
           >
         </td>
         <td class="table__data">
           <input
-            :class="`input ${ readonly ? 'input--readonly' : '' }`" 
-            @dblclick="toggleReadonly"
-            @blur="updateActivity"
+            :class="`input ${ !editMode ? 'input--readonly' : '' }`" 
+            @dblclick="enableEditMode"
+            @keyup.esc="disableEditMode"
+            @blur="updateActivity(activities)"
             type="text" 
             v-model="activity.task"
-            :readonly="readonly"
+            :readonly="!editMode"
           >
+        </td>
+        <td 
+          class="table__data"
+          v-show="editMode"
+        >
+          <button
+            class="button button--danger"
+            @click="deleteActivity(activity, index)"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>
@@ -56,7 +76,8 @@
 </template>
 
 <script>
-import { ref, toRefs, watchEffect, onBeforeUpdate } from 'vue';
+import { ref, toRefs } from 'vue';
+import useAlert from '@/composables/useAlert';
 
 export default {
   props: {
@@ -66,34 +87,36 @@ export default {
     }
   },
   setup (props, { emit }) {
-
+    const { showConfirmation, warningAlert } = useAlert();
     const { activities } = toRefs(props);
+    const editMode = ref(false);
 
-    const readonly = ref(true);
+    function enableEditMode () { editMode.value = true; }
 
-    const element = ref({
-      start: [],
-      end: [],
-      task: []
-    });
+    function disableEditMode () { editMode.value = false; }
 
-    onBeforeUpdate(() => {
-      element.value.time = [];
-      element.value.task = [];
-    });
-    
-    function toggleReadonly () { readonly.value = !readonly.value };
+    function updateActivity (activities) { emit('activityUpdate', activities); }
 
-    function updateActivity (e) {
-      if (!readonly.value) emit('activityUpdate', activities.value);
+    async function deleteActivity (activity, targetIndex) {
+      const newActivities = activities.value.filter((_, index) => index !== targetIndex);
+      const confirmation = await warningAlert({
+        title: 'Delete this',
+        text: `Time: ${ activity.start } - ${ activity.end } \n Task: ${ activity.task }`,
+        input: 'checkbox',
+        inputValue: 0,
+        inputPlaceholder: 'Don\'t ask again'
+      });
+
+      if (confirmation) updateActivity(newActivities);
     }
 
     return {
       activities,
-      element,
-      readonly,
-      toggleReadonly,
-      updateActivity
+      editMode,
+      enableEditMode,
+      disableEditMode,
+      updateActivity,
+      deleteActivity
     }
   }
 }
