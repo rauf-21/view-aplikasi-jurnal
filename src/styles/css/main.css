@@ -362,14 +362,35 @@ template {
   src: local("Segoe UI Semibold"), url(c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2) format("woff2"), url(c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff) format("woff"), url(c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf) format("truetype");
   font-weight: 700;
 }
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
 .button {
   padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
   font-size: 0.8rem;
   font-weight: bold;
   background-color: #1A202C;
   color: white;
   border: 1px solid #4A5568;
   cursor: pointer;
+}
+.button > * {
+  padding: 0 0.2rem;
 }
 .button--primary {
   color: #2ecc71;
@@ -380,6 +401,9 @@ template {
   background-color: #208e4e;
   border: 1px solid #208e4e;
 }
+.button--primary:focus {
+  background-color: #1A202C;
+}
 .button--danger {
   color: #e74c3c;
   border: 1px solid #e74c3c;
@@ -388,6 +412,18 @@ template {
   color: white;
   background-color: #e43725;
   border: 1px solid #e43725;
+}
+.button--warning {
+  color: #f1c40f;
+  border: 1px solid #f1c40f;
+}
+.button--warning:hover {
+  color: white;
+  background-color: #dab10d;
+  border: 1px solid #dab10d;
+}
+.button--dark {
+  background-color: #11141c;
 }
 
 .table {
@@ -486,6 +522,7 @@ template {
 
 .link {
   color: #2ecc71;
+  text-decoration: none;
 }
 .link:hover {
   text-shadow: 0px 0px 5px #2ecc71;
@@ -501,6 +538,10 @@ template {
   font-weight: bold;
   margin-bottom: 0;
 }
+.icon {
+  font-size: 1.5rem;
+}
+
 .journal {
   width: 100vw;
   min-height: 100vh;
@@ -517,7 +558,7 @@ template {
 }
 .journal__date {
   box-sizing: border-box;
-  width: 100%;
+  width: 100% !important;
 }
 .journal__actions {
   box-sizing: border-box;
@@ -606,6 +647,42 @@ template {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.navigation {
+  margin-top: 0;
+  margin-bottom: 0.2rem;
+  padding: 0 0.8rem;
+  width: 100vw;
+  background-color: #11141c;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.navigation .home {
+  justify-self: stretch;
+}
+.navigation-action {
+  display: flex;
+  flex-direction: row;
+}
+.navigation-action > * {
+  margin: 0.5rem 0.8rem;
+}
+.navigation > * {
+  margin: 0.5rem 0.8rem;
+}
+
+.fallback {
+  width: 100vw;
+  color: white !important;
+}
+.fallback__content {
+  color: white;
 }
 
 body {

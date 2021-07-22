@@ -6,9 +6,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^3.0.0-4",
     "@popperjs/core": "^2.4.0",
     "@sweetalert2/theme-dark": "^5.0.1",
-    "json-server": "^0.16.3",
+    "epic-spinners": "^1.1.0",
+    "firebase": "^8.7.1",
     "localforage": "^1.9.0",
     "sweetalert2": "^11.0.18",
     "v-calendar": "^3.0.0-alpha.4",

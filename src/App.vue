@@ -1,21 +1,30 @@
 <template>
   <Suspense>
     <template #default>
-      <router-view />
+      <div>
+        <NavigationBar />
+        <router-view v-slot="{ Component }">
+          <transition name="slide-fade">
+            <component :is="Component" /> 
+          </transition>
+        </router-view>
+      </div>
     </template>
     <template #fallback>
-      <p>Loading...</p>
+      <div class="fallback">
+        <p class="fallback__text" style="">Loading...</p>
+      </div>
     </template>
   </Suspense>
 </template>
 
 <script>
-import Journal from '@/pages/Journal.vue'; 
-import Signup from './pages/Signup.vue';
-import Signin from './pages/Signin.vue';
+import NavigationBar from '@/components/NavigationBar.vue';
 
 export default {
-  components: { Journal, Signup, Signin }
+  components: { 
+    NavigationBar 
+  }
 }
 
 </script>
