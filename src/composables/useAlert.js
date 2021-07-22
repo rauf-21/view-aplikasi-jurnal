@@ -25,12 +25,11 @@ const useAlert = () => {
 
     return false;
   }
-
+  
   return {
     showConfirmation,
     warningAlert
   }
 }
-
 
 export default useAlert;

@@ -1,55 +1,87 @@
 <template>
   <div class="signin">
-    <label class="label">Username</label>
+    <label class="label">Email</label>
     <input 
       class="input" 
-      type="text"
-      v-model="signinData.userUniqueName"
+      type="email"
+      v-model="user.email"
     >
     <label class="label">Password</label>
     <input 
       class="input" 
       type="password"
-      v-model="signinData.password"
+      v-model="user.password"
     >
-    <button 
-      class="button button--primary" 
-      @click="handleSignin"
-    >
-      Sign in
-    </button>
+    <ButtonAction 
+      :action="signin"
+      text="Sign in"
+    />
     <div class="to-signup">
       <p class="label">Don't have an account ?</p>
-      <a 
-        class="link" 
-        href=""
+      <router-link
+        class="link"
+        :to="{ name: 'signup' }"
       >
         Sign up
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue';
+import firebase from 'firebase/app';
+import { useRouter } from 'vue-router';
+import ButtonAction from '@/components/ButtonAction.vue';
+import { useToast } from 'vue-toastification';
+import toastConfig from '@/config/toast';
+import 'firebase/auth';
 
-const signinData = ref({
-  userUniqueName: '',
-  password: ''
-});
+export default {
+  components: {
+    ButtonAction
+  },
+  setup () {
+    const user = ref({
+      email: '',
+      password: ''
+    });
 
-function handleSignin () {
-  fetch ('http://localhost:5500/user/signin', {
-    mode: 'cors',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(signinData.value)
-  })
-    .then( res => res.json())
-    .then( data => console.log(data))
-    .catch( err => console.error(err));
+    const toast = useToast();
+
+    const router = useRouter();
+
+    async function signin () {
+      let result = { success: false };
+      
+      try {
+        const response = await firebase
+          .auth()
+          .signInWithEmailAndPassword(
+            user.value.email,
+            user.value.password
+          );
+
+        if (!response.additionalUserInfo.isNewUser) { 
+          result.success = true;
+          router.push({ name: 'journal' });
+        }
+
+      }
+      catch (error) {
+        toast.clear();
+        toast.error(error.message, toastConfig.error);
+        result.success = false;
+      }
+
+      return result;
+    }
+
+    return {
+      user,
+      signin
+    }  
+  }  
 }
 
 </script>

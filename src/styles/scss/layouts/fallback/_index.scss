@@ -1,0 +1,10 @@
+@use '../../abstracts';
+
+.fallback {
+  width: 100vw;
+  color: abstracts.$text-color !important;
+
+  &__content {
+    color: abstracts.$text-color;
+  }
+}

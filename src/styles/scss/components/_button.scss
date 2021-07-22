@@ -2,12 +2,20 @@
 
 .button {
   padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
   font-size: 0.8rem;
   font-weight: bold;
   background-color: abstracts.$bright-dark;
   color: abstracts.$text-color;
   border: 1px solid abstracts.$bright-separator;
   cursor: pointer;
+
+  & > * {
+    padding: 0 0.2rem;
+  }
 
   &--primary {
     color: abstracts.$primary;
@@ -17,6 +25,10 @@
       color: abstracts.$text-color;
       background-color: darken(abstracts.$primary, 15%);
       border: 1px solid darken(abstracts.$primary, 15%);
+    }
+
+    &:focus {
+      background-color: abstracts.$bright-dark;
     }
   }
 
@@ -29,5 +41,20 @@
       background-color: darken(abstracts.$danger, 5%);
       border: 1px solid darken(abstracts.$danger, 5%);
     }
+  }
+
+  &--warning {
+    color: abstracts.$warning;
+    border: 1px solid abstracts.$warning;
+
+    &:hover {
+      color: abstracts.$text-color;
+      background-color: darken(abstracts.$warning, 5%);
+      border: 1px solid darken(abstracts.$warning, 5%);
+    }
+  }
+
+  &--dark {
+    background-color: abstracts.$dark;
   }
 }

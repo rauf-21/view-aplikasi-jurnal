@@ -23,9 +23,6 @@
       </div>
     </div>
   </div>
-  <div v-else>
-    <p>Loading...</p>
-  </div>
 </template>
 
 <script>
@@ -33,10 +30,10 @@ import JournalDatePicker from '@/components/JournalDatePicker.vue';
 import JournalMetadata from '@/components/JournalMetadata.vue';
 import JournalActivity from '@/components/JournalActivity.vue';
 import JournalAction from '@/components/JournalAction.vue';
-import { ref, watch } from 'vue';
-import { useToast } from 'vue-toastification'; 
 import useDiary from '@/composables/useDiary';
 import toastConfig from '@/config/toast';
+import { ref, watch, onMounted } from 'vue';
+import { useToast } from 'vue-toastification'; 
 
 export default {
   components: { 
@@ -47,9 +44,8 @@ export default {
   },
 
   async setup () {
-
     const toast = useToast();
-
+    
     const selectedDay = ref(new Date());    
 
     const { 

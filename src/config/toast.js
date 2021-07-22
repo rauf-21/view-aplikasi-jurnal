@@ -7,5 +7,8 @@ export default {
   },
   short: {
     timeout: 2000
+  },
+  long: {
+    timeout: 10000
   }
 }
