@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import useAuth from '@/composables/useAuth';
 import store from '@/store';
 
@@ -46,6 +46,10 @@ export default {
     });
 
     const { isAuthenticated } = useAuth();
+
+    watch(store.state, (prevValue, value) => {
+      user.value.email = value.user.email;
+    });
 
     onMounted ( async () => {
       const response = await isAuthenticated();

@@ -3,7 +3,7 @@
     <label class="label">Email</label>
     <input 
       class="input" 
-      type="email"
+      type="text"
       v-model="user.email"
     >
     <label class="label">Password</label>
@@ -36,6 +36,7 @@ import ButtonAction from '@/components/ButtonAction.vue';
 import { useToast } from 'vue-toastification';
 import toastConfig from '@/config/toast';
 import 'firebase/auth';
+import store from '@/store';
 
 export default {
   components: {
@@ -65,6 +66,10 @@ export default {
         if (!response.additionalUserInfo.isNewUser) { 
           result.success = true;
           router.push({ name: 'journal' });
+          store.setUser({
+            email: user.value.email,
+            sync: false
+          });
         }
 
       }

@@ -14,7 +14,10 @@ const store = {
     this.state.isAuthenticated = newValue;
   },
   setUser (newValue) {
-    if (this.debug) console.log(`setUser is trigerred with ${newValue}`);
+    if (this.debug) {
+      console.log(`setUser is trigerred with : `);
+      console.log(newValue);
+    }
     this.state.user = {...newValue};
   }
 }
