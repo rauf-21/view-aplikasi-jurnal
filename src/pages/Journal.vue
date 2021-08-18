@@ -23,17 +23,29 @@
       </div>
     </div>
   </div>
+  <div 
+    class="fallback" 
+    v-else
+  >
+    <p class="fallback__content">Loading...</p>
+  </div>
 </template>
 
 <script>
+import { ref, watch, onMounted } from 'vue';
+
+// Components
 import JournalDatePicker from '@/components/JournalDatePicker.vue';
 import JournalMetadata from '@/components/JournalMetadata.vue';
 import JournalActivity from '@/components/JournalActivity.vue';
 import JournalAction from '@/components/JournalAction.vue';
+
+// Hooks
 import useDiary from '@/composables/useDiary';
-import toastConfig from '@/config/toast';
-import { ref, watch, onMounted } from 'vue';
 import { useToast } from 'vue-toastification'; 
+
+// Config
+import toastConfig from '@/config/toast';
 
 export default {
   components: { 
@@ -43,21 +55,24 @@ export default {
     JournalAction
   },
 
-  async setup () {
+  setup () {
     const toast = useToast();
     
     const selectedDay = ref(new Date());    
 
     const { 
       diary, 
+      getAllDiary,
       navigateDiary, 
       addDiaryActivity,
       updateDiaryActivity 
-    } = await useDiary(selectedDay.value);
+    } = useDiary(selectedDay.value);
 
     watch (selectedDay, async (selectedDay, prevSelectedDay) => {
       await navigateDiary(selectedDay);
     });
+
+    ( async () => console.log(await getAllDiary()) )();
 
     function changeDate (date) { selectedDay.value = date; }
 

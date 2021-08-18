@@ -11,6 +11,15 @@ const useDiary = (targetDate) => {
     await navigateDiary(date.value);
   });
 
+  async function getAllDiary () {
+    let data = [];
+
+    return diaryCollection.iterate( value => { 
+      data.push(value);
+    })
+      .then(() => data);
+  }
+
   async function navigateDiary (targetDate) {
     const key = formattedDate(targetDate);
     const data = await diaryCollection.getItem(key);
@@ -85,6 +94,7 @@ const useDiary = (targetDate) => {
 
   return {
     diary,
+    getAllDiary,
     navigateDiary,
     addDiaryActivity,
     updateDiaryActivity

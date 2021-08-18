@@ -1,3 +1,5 @@
+@use '../../abstracts';
+
 .signin {
   width: 100vw;
   display: flex;
@@ -5,13 +7,20 @@
   justify-content: center;
   align-items: center;
   padding: 1rem 0;
-
+  background-image: url('@/assets/signin.svg');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 40%;
   & > * {
     margin: 1rem 0;
   }
 
   input {
     width: 30%;
+  }
+
+  &__title {
+    color: abstracts.$text-color;
   }
 
   .to-signup {

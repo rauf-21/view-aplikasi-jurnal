@@ -3,10 +3,11 @@ import App from '@/App.vue';
 import Toast from 'vue-toastification';
 import firebase from 'firebase/app';
 import router from '@/router';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserCircle, faSyncAlt, faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import 'firebase/auth';
+
 import 'vue-toastification/dist/index.css';
 import '@/styles/css/main.css';
 import '@sweetalert2/theme-dark/dark.css';

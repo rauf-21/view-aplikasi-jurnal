@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 
 const store = {
-  debug: true,
+  debug: false,
   state: reactive({
     user: {
       email: null,

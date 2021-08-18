@@ -1,5 +1,6 @@
 <template>
   <div class="signin">
+    <h1 class="signin__title">Sign in</h1>
     <label class="label">Email</label>
     <input 
       class="input" 
@@ -79,12 +80,12 @@ export default {
         result.success = false;
       }
 
-      return result;
+      return result.success;
     }
 
     return {
       user,
-      signin
+      signin    
     }  
   }  
 }

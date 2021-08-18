@@ -1,11 +1,11 @@
 <template>
   <button
-    class="button button--primary"
+    class="button button--primary button--center"
     @click="handleClick"
   >
-    <span v-show="!isLoading">{{ text }}</span>
+    <span v-if="!isLoading">{{ text }}</span>
     <Spinner 
-      v-show="isLoading"
+      v-else
       :size="20"
       :color="'#2ecc71'"
     />    

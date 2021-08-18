@@ -380,7 +380,7 @@ template {
   padding: 0.5rem 1rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   font-size: 0.8rem;
   font-weight: bold;
@@ -424,6 +424,9 @@ template {
 }
 .button--dark {
   background-color: #11141c;
+}
+.button--center {
+  justify-content: center;
 }
 
 .table {
@@ -616,12 +619,19 @@ template {
   justify-content: center;
   align-items: center;
   padding: 1rem 0;
+  background-image: url("@/assets/signin.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 40%;
 }
 .signin > * {
   margin: 1rem 0;
 }
 .signin input {
   width: 30%;
+}
+.signin__title {
+  color: white;
 }
 .signin .to-signup {
   display: flex;
@@ -636,12 +646,19 @@ template {
   justify-content: center;
   align-items: center;
   padding: 1rem 0;
+  background-image: url("@/assets/signup.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 40%;
 }
 .signup > * {
   margin: 1rem 0;
 }
 .signup input {
   width: 30%;
+}
+.signup__title {
+  color: white;
 }
 .signup .to-signin {
   display: flex;
@@ -679,6 +696,11 @@ template {
 
 .fallback {
   width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   color: white !important;
 }
 .fallback__content {

@@ -1,5 +1,6 @@
 <template>
   <div class="signup">
+    <h1 class="signup__title">Sign up</h1>
     <label class="label">Email</label>
     <input 
       class="input" 
