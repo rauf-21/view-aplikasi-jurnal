@@ -77,7 +77,9 @@
 
 <script>
 import { ref, toRefs } from 'vue';
-import useAlert from '@/composables/useAlert';
+
+// Hooks
+import useAlert from '@/hooks/useAlert';
 
 export default {
   props: {

@@ -10,7 +10,10 @@
       />
     </router-link>
     <div class="navigation-action">
-      <button :class="`button button--dark button--${ user.sync ? 'primary' : 'warning' }`">
+      <button 
+        :class="`button button--dark button--${ user.sync ? 'primary' : 'warning' }`"
+        @click="syncData"
+      >
         <FAIcon
           class="icon"
           icon="sync-alt"
@@ -35,7 +38,12 @@
 
 <script>
 import { ref, onMounted, watch } from 'vue';
-import useAuth from '@/composables/useAuth';
+
+// Hooks
+import useAuth from '@/hooks/useAuth';
+import useAlert from '@/hooks/useAlert';
+
+// Store
 import store from '@/store';
 
 export default {
@@ -49,6 +57,7 @@ export default {
 
     watch(store.state, (prevValue, value) => {
       user.value.email = value.user.email;
+      user.value.sync = value.user.sync
     });
 
     onMounted ( async () => {
@@ -60,8 +69,13 @@ export default {
       }
     });
 
+    async function syncData () {
+      console.log('yes');
+    }
+
     return {
-      user
+      user,
+      syncData
     }
   }
 }

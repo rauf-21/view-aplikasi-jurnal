@@ -41,7 +41,7 @@ import JournalActivity from '@/components/JournalActivity.vue';
 import JournalAction from '@/components/JournalAction.vue';
 
 // Hooks
-import useDiary from '@/composables/useDiary';
+import useDiary from '@/hooks/useDiary';
 import { useToast } from 'vue-toastification'; 
 
 // Config
@@ -71,8 +71,6 @@ export default {
     watch (selectedDay, async (selectedDay, prevSelectedDay) => {
       await navigateDiary(selectedDay);
     });
-
-    ( async () => console.log(await getAllDiary()) )();
 
     function changeDate (date) { selectedDay.value = date; }
 
