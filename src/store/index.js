@@ -3,6 +3,7 @@ import { reactive } from 'vue';
 const store = {
   debug: false,
   state: reactive({
+    date: null,
     user: {
       email: null,
       sync: false
@@ -19,6 +20,13 @@ const store = {
       console.log(newValue);
     }
     this.state.user = {...newValue};
+  },
+  setDate (newValue) {
+    if (this.debug) {
+      console.log(`setDate is trigerred with : `);
+      console.log(newValue);
+    }
+    this.state.date = newValue;
   }
 }
 

@@ -1,6 +1,18 @@
 import { ref, watch, onMounted } from 'vue';
+
+// Helper
 import { formattedDate, copyObject } from '@/helper';
+
+// Hooks
+import useAuth from '@/hooks/useAuth';
+
+// Local DB
 import { diaryCollection } from '@/db';
+
+// Store
+import store from '@/store';
+
+const { isAuthenticated }  = useAuth(); 
 
 const useDiary = (targetDate) => {
   const date = ref(targetDate);
@@ -27,7 +39,7 @@ const useDiary = (targetDate) => {
     if (data === null) {
       const emptyDiary = {
         metadata: {
-          author: 'anonymous',
+          author: await isAuthenticated() ? store.state.user.email : 'anonymous',
           date: formattedDate(targetDate),
           score: 0
         },
@@ -83,7 +95,7 @@ const useDiary = (targetDate) => {
       }
     }
     catch (err) {
-      console.error('Failed to update diary activity :\n${ err }');
+      console.error(`Failed to update diary activity :\n${ err }`);
 
       return {
         success: false,

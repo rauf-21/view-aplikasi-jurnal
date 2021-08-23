@@ -40,12 +40,18 @@ import JournalMetadata from '@/components/JournalMetadata.vue';
 import JournalActivity from '@/components/JournalActivity.vue';
 import JournalAction from '@/components/JournalAction.vue';
 
+// Helper
+import { formattedDate } from '@/helper';
+
 // Hooks
 import useDiary from '@/hooks/useDiary';
 import { useToast } from 'vue-toastification'; 
 
 // Config
 import toastConfig from '@/config/toast';
+
+// Store
+import store from '@/store';
 
 export default {
   components: { 
@@ -70,9 +76,12 @@ export default {
 
     watch (selectedDay, async (selectedDay, prevSelectedDay) => {
       await navigateDiary(selectedDay);
+      store.setDate(selectedDay);
     });
-
-    function changeDate (date) { selectedDay.value = date; }
+    
+    function changeDate (date) { 
+      selectedDay.value = date; 
+    }
 
     async function addNewActivity (newActivity) {
       const response = await addDiaryActivity(selectedDay.value, newActivity);

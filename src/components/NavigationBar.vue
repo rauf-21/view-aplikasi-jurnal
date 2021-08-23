@@ -39,25 +39,48 @@
 <script>
 import { ref, onMounted, watch } from 'vue';
 
+// Config
+import toastConfig from '@/config/toast';
+
 // Hooks
 import useAuth from '@/hooks/useAuth';
-import useAlert from '@/hooks/useAlert';
+import useDiary from '@/hooks/useDiary';
+import useFirestore from '@/hooks/useFirestore';
+import { useToast } from 'vue-toastification'; 
 
 // Store
 import store from '@/store';
 
 export default {
   setup () {
+    const { isAuthenticated } = useAuth();
+    const { toast } = useToast();
+    const { getAllDiary } = useDiary(store.state.date ?? new Date()); 
+    const { addDocument } = useFirestore();
+
     const user = ref({
       email: null,
       sync: false
     });
 
-    const { isAuthenticated } = useAuth();
+    watch(store.state, async (prevValue, value) => {
+      const diaries = await getAllDiary();
+      const isAnonymousDiary = (el => el.metadata.author === 'anonymous');
 
-    watch(store.state, (prevValue, value) => {
       user.value.email = value.user.email;
-      user.value.sync = value.user.sync
+      user.value.sync = value.user.sync;
+
+      if ((diaries.some(el => isAnonymousDiary(el))))  {
+        const newDiaries = diaries.map(el => ({
+          metadata: {
+            author: user.value.email,
+            data: el.metadata.date,
+            score: el.metadata.score
+          },
+          activities: [ ...el.activities ]
+        }))
+        
+      }
     });
 
     onMounted ( async () => {
@@ -70,7 +93,14 @@ export default {
     });
 
     async function syncData () {
-      console.log('yes');
+      if (user.value.sync) {
+        toast.info('No need to! Data is already synced');
+        return;
+      } 
+
+      // console.log(store.state.date);
+      // store.setDate();
+      addDocument('journals', await getAllDiary());
     }
 
     return {

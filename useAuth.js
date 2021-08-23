@@ -1,10 +1,9 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-
-// Store
 import store from '@/store';
 
 const useAuth = () => {
+
   async function isAuthenticated () {
     return new Promise((resolve) => {
       firebase
@@ -16,7 +15,6 @@ const useAuth = () => {
               sync: false
             });
             store.setIsAuthenticated(true);
-
           }
           else store.setIsAuthenticated(false);          
           resolve(store.state.isAuthenticated);
