@@ -78,7 +78,14 @@ export default {
       await navigateDiary(selectedDay);
       store.setDate(selectedDay);
     });
-    
+  
+    (() => {
+      // window.addEventListener('beforeunload', () => {
+      //   alert(window.performance);
+      // });
+      console.log()
+    })();
+
     function changeDate (date) { 
       selectedDay.value = date; 
     }

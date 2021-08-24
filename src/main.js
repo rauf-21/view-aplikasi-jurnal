@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 import router from '@/router';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUserCircle, faSyncAlt, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faSyncAlt, faHome, faCloudDownloadAlt, faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import 'vue-toastification/dist/index.css';
@@ -27,7 +27,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-library.add(faUserCircle, faSyncAlt, faHome);
+library.add(faUserCircle, faSyncAlt, faHome, faCloudDownloadAlt, faCloudUploadAlt);
 
 app.component('FAIcon', FontAwesomeIcon);
 

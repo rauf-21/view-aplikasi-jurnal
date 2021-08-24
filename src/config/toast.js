@@ -10,5 +10,8 @@ export default {
   },
   long: {
     timeout: 10000
+  },
+  infinite: {
+    timeout: false
   }
 }

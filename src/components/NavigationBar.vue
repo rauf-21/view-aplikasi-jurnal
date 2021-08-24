@@ -10,13 +10,24 @@
       />
     </router-link>
     <div class="navigation-action">
+      <button
+        class="button button--dark button--primary"
+        v-if="user.email"
+        @click="loadData"
+      >
+        <FAIcon
+          class="icon"
+          icon="cloud-download-alt"
+        />
+        <span>Load data</span>  
+      </button>
       <button 
         :class="`button button--dark button--${ user.sync ? 'primary' : 'warning' }`"
         @click="syncData"
       >
         <FAIcon
           class="icon"
-          icon="sync-alt"
+          icon="cloud-upload-alt"
         />
         <span>{{ user.sync ? 'Sync' : 'Not sync' }}</span>
       </button>
@@ -51,11 +62,15 @@ import { useToast } from 'vue-toastification';
 // Store
 import store from '@/store';
 
+// Firebase
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 export default {
   setup () {
     const { isAuthenticated } = useAuth();
-    const { toast } = useToast();
-    const { getAllDiary } = useDiary(store.state.date ?? new Date()); 
+    const toast = useToast();
+    const { setDiaries, getAllDiary } = useDiary(store.state.date ?? new Date()); 
     const { addDocument } = useFirestore();
 
     const user = ref({
@@ -70,16 +85,21 @@ export default {
       user.value.email = value.user.email;
       user.value.sync = value.user.sync;
 
-      if ((diaries.some(el => isAnonymousDiary(el))))  {
-        const newDiaries = diaries.map(el => ({
+      if (diaries.some(isAnonymousDiary) && value.isAuthenticated) {
+        const newDiaries = diaries.map(diary => ({
           metadata: {
-            author: user.value.email,
-            data: el.metadata.date,
-            score: el.metadata.score
+            author: value.user.email,
+            date: diary.metadata.date,
+            score: diary.metadata.score
           },
-          activities: [ ...el.activities ]
-        }))
-        
+          activities: [...diary.activities]
+        }));
+
+        const result = await setDiaries(newDiaries);
+      
+        if (result.success) {
+          toast.success('New changes are made. Please refresh the page.', toastConfig.infinite);          
+        }        
       }
     });
 
@@ -90,22 +110,56 @@ export default {
         user.value.email = store.state.user.email,
         user.value.sync = store.state.user.sync
       }
+
+      if (store.state.user.email !== null) {
+        syncData();
+      }
     });
 
     async function syncData () {
       if (user.value.sync) {
-        toast.info('No need to! Data is already synced');
+        toast.info('No need to! Journal is already synced to cloud', toastConfig.short);
         return;
       } 
+      const diaries = await getAllDiary();
 
-      // console.log(store.state.date);
-      // store.setDate();
-      addDocument('journals', await getAllDiary());
+      for (const diary of diaries) {        
+        try {
+          const result = await addDocument('journals', diary);
+        }
+        catch (err) {
+          console.log(err)
+          store.state.user.sync = false;   
+        }
+      }
+
+      store.state.user.sync = true; 
     }
+
+    async function loadData () {
+      let data = [];
+      firebase.firestore()
+        .collection('journals')
+        .where('metadata.author', '==', store.state.user.email)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            data.push(doc.data());
+          });
+        })
+        .then(() => {
+          setDiaries(data);
+          console.log(data)
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    } 
 
     return {
       user,
-      syncData
+      syncData,
+      loadData
     }
   }
 }

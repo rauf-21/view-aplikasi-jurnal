@@ -33,7 +33,7 @@ const useDiary = (targetDate) => {
   }
 
   async function navigateDiary (targetDate) {
-    const key = formattedDate(targetDate);
+    const key = `${await isAuthenticated () ? store.state.user.email : 'anonymous'}(${ formattedDate(targetDate) })`;
     const data = await diaryCollection.getItem(key);
 
     if (data === null) {
@@ -56,16 +56,18 @@ const useDiary = (targetDate) => {
       return;
     }
 
+    store.state.sync = false;
     diary.value = data;
   }
 
   async function addDiaryActivity (targetDate, newActivity) {
     try {
-      const key = formattedDate(targetDate);
+      const key = `${await isAuthenticated () ? store.state.user.email : 'anonymous'}(${ formattedDate(targetDate) })`;
       
       diary.value.activities = [...diary.value.activities, newActivity];
 
-      await diaryCollection.setItem(key, copyObject(diary.value));
+      diaryCollection.setItem(key, copyObject(diary.value))
+        .then(() => store.state.user.sync = false);
     
       return { 
         success: true ,
@@ -73,7 +75,7 @@ const useDiary = (targetDate) => {
       };
     }
     catch (err) {
-    
+      
       return { 
         success: false, 
         message: 'Failed to add diary activity' 
@@ -83,11 +85,12 @@ const useDiary = (targetDate) => {
 
   async function updateDiaryActivity (targetDate, newActivities) {
     try {
-      const key = formattedDate(targetDate);
+      const key = `${await isAuthenticated () ? store.state.user.email : 'anonymous'}(${ formattedDate(targetDate) })`;
 
       diary.value.activities = [...newActivities];
 
-      await diaryCollection.setItem(key, copyObject(diary.value));
+      diaryCollection.setItem(key, copyObject(diary.value))
+        .then(() => store.state.user.sync = false);
 
       return {
         success: true,
@@ -104,12 +107,35 @@ const useDiary = (targetDate) => {
     }
   }
 
+  async function setDiaries (newDiaries) {
+    try {
+      const result = diaryCollection.iterate((value, key, iterationNumber) => {
+        diaryCollection.setItem(key, newDiaries[iterationNumber - 1]);
+      })
+        .then(() => ({
+          success: true,
+          message: 'Diaries set successfully'
+        }));
+
+      return result; 
+    }
+    catch (err) {
+      console.log(`Failed to set diaries :\n${ err }`);
+
+      return {
+        success: false,
+        message: 'Failed to set diaries'
+      }
+    }
+  }
+
   return {
     diary,
     getAllDiary,
     navigateDiary,
     addDiaryActivity,
-    updateDiaryActivity
+    updateDiaryActivity,
+    setDiaries
   }
 }
 

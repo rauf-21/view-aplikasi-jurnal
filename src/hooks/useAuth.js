@@ -16,7 +16,6 @@ const useAuth = () => {
               sync: false
             });
             store.setIsAuthenticated(true);
-
           }
           else store.setIsAuthenticated(false);          
           resolve(store.state.isAuthenticated);
