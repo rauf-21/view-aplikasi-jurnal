@@ -1,7 +1,4 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import { defineAsyncComponent } from 'vue';
-import Signin from '@/pages/Signin.vue';
-import Signup from '@/pages/Signup.vue';
 
 const routes = [
   {
@@ -14,12 +11,12 @@ const routes = [
   {
     path: '/signin',
     name: 'signin',
-    component: Signin
+    component: () => ('@/pages/Signin.vue')
   },
   {
     path: '/signup',
     name: 'signup',
-    component: Signup
+    component: () => import('@/pages/Signup.vue')
   },
   {
     path: '/journal',
