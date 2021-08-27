@@ -9,7 +9,7 @@
       <tr class="table__row">
         <td class="table__data">{{ author }}</td>
         <td class="table__data">{{ date }}</td>
-        <td class="table__data">{{ score }}</td>
+        <!-- <td class="table__data">{{ score }}</td> -->
       </tr>
     </tbody>
   </table>

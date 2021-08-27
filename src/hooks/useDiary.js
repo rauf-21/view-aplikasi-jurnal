@@ -109,8 +109,13 @@ const useDiary = (targetDate) => {
 
   async function setDiaries (newDiaries) {
     try {
+    diaryCollection.clear();
+
       const result = diaryCollection.iterate((value, key, iterationNumber) => {
-        diaryCollection.setItem(key, newDiaries[iterationNumber - 1]);
+        // if (value.metadata.author === store.state.user.email) {
+        //   diaryCollection.setItem(key, newDiaries[iterationNumber - 1]);
+        // }
+        diaryCollection.addItem(newDiaries[iterationNumber - 1]);
       })
         .then(() => ({
           success: true,

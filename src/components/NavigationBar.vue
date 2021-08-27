@@ -80,7 +80,15 @@ export default {
 
     watch(store.state, async (prevValue, value) => {
       const diaries = await getAllDiary();
-      const isAnonymousDiary = (el => el.metadata.author === 'anonymous');
+      const isAnonymousDiary = (el) => el.metadata.author === 'anonymous';
+
+      try {
+        console.log(diaries);  
+        diaries.some(isAnonymousDiary)      
+      }
+      catch (err) {
+        console.error('Error here : ' + err);
+      }
 
       user.value.email = value.user.email;
       user.value.sync = value.user.sync;
