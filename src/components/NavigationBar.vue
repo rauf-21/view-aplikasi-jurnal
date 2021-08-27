@@ -120,9 +120,9 @@ export default {
         user.value.sync = store.state.user.sync
       }
 
-      if (store.state.user.email !== null) {
-        syncData();
-      }
+      // if (store.state.user.email !== null) {
+      //   syncData();
+      // }
     });
 
     async function syncData () {
