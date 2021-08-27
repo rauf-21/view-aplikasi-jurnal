@@ -3,7 +3,7 @@
     <thead class="table__head-container">
       <th class="table__head">Author</th>
       <th class="table__head">Date</th>
-      <th class="table__head">Score</th>
+      <!-- <th class="table__head">Score</th> -->
     </thead>
     <tbody class="table__row-container">
       <tr class="table__row">
