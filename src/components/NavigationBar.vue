@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, getCurrentInstance } from 'vue';
 
 // Config
 import toastConfig from '@/config/toast';
@@ -72,6 +72,7 @@ export default {
     const toast = useToast();
     const { setDiaries, getAllDiary } = useDiary(store.state.date ?? new Date()); 
     const { addDocument } = useFirestore();
+    const instance = getCurrentInstance();
 
     const user = ref({
       email: null,
@@ -104,7 +105,7 @@ export default {
         }));
 
         const result = await setDiaries(newDiaries);
-      
+        
         if (result.success) {
           toast.success('New changes are made. Please refresh the page.', toastConfig.infinite);          
         }        
@@ -157,7 +158,7 @@ export default {
         })
         .then(() => {
           setDiaries(data);
-          console.log(data)
+          toast.success('New changes are made. Please refresh the page.', toastConfig.infinite);
         })
         .catch(err => {
           console.error(err);

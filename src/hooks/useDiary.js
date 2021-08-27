@@ -109,18 +109,18 @@ const useDiary = (targetDate) => {
 
   async function setDiaries (newDiaries) {
     try {
-    diaryCollection.clear();
+      diaryCollection.clear();
 
-      const result = diaryCollection.iterate((value, key, iterationNumber) => {
-        // if (value.metadata.author === store.state.user.email) {
-        //   diaryCollection.setItem(key, newDiaries[iterationNumber - 1]);
-        // }
-        diaryCollection.addItem(newDiaries[iterationNumber - 1]);
-      })
-        .then(() => ({
-          success: true,
-          message: 'Diaries set successfully'
-        }));
+      const result = newDiaries.reduce((_, diary) => {
+        return diaryCollection.setItem(
+          `${diary.metadata.author}(${diary.metadata.date})`,
+          diary
+        )
+          .then(() => ({
+            success: true,
+            message: 'Diaries set successfully'
+          }))
+      }, { success : false });
 
       return result; 
     }
