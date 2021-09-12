@@ -5,6 +5,7 @@ const store = {
   state: reactive({
     date: null,
     user: {
+      name: 'anonymous',
       email: null,
       sync: false
     },
@@ -27,7 +28,14 @@ const store = {
       console.log(newValue);
     }
     this.state.date = newValue;
-  }
+  },
+  setUserName (newValue) {
+    if (this.debug) {
+      console.log(`setUserName is trigerred with : `);
+      console.log(newValue);
+    }
+    this.state.user.name = newValue;
+  },
 }
 
 export default store;

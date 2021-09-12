@@ -12,9 +12,9 @@
       </div>
       <div class="journal__details">
         <JournalMetadata 
+          :name="diary.metadata.name"
           :author="diary.metadata.author"
           :date="diary.metadata.date"
-          :score="diary.metadata.score"
         />
         <JournalActivity 
           :activities="diary.activities"

@@ -14,11 +14,13 @@
     "epic-spinners": "^1.1.0",
     "firebase": "^8.7.1",
     "localforage": "^1.9.0",
+    "naive-ui": "^2.18.1",
     "sweetalert2": "^11.0.18",
     "v-calendar": "^3.0.0-alpha.4",
     "vue": "^3.0.5",
     "vue-router": "4",
-    "vue-toastification": "^2.0.0-rc.1"
+    "vue-toastification": "^2.0.0-rc.1",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",

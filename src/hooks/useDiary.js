@@ -46,6 +46,8 @@ const useDiary = (targetDate) => {
         activities: []
       }
 
+      console.log(store.state.user);
+
       try {
         diary.value = await diaryCollection.setItem(key, emptyDiary);     
       }

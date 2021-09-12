@@ -72,9 +72,9 @@ export default {
     const toast = useToast();
     const { setDiaries, getAllDiary } = useDiary(store.state.date ?? new Date()); 
     const { addDocument } = useFirestore();
-    const instance = getCurrentInstance();
 
     const user = ref({
+      name: 'anonymous',
       email: null,
       sync: false
     });
@@ -84,7 +84,6 @@ export default {
       const isAnonymousDiary = (el) => el.metadata.author === 'anonymous';
 
       try {
-        console.log(diaries);  
         diaries.some(isAnonymousDiary)      
       }
       catch (err) {
@@ -116,8 +115,8 @@ export default {
       const response = await isAuthenticated();
         
       if (response) {
-        user.value.email = store.state.user.email,
-        user.value.sync = store.state.user.sync
+        user.value.email = store.state.user.email;
+        user.value.sync = store.state.user.sync;
       }
 
       // if (store.state.user.email !== null) {
